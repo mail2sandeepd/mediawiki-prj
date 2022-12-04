@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wiki-db
+  name: wiki-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiki-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        network/wikinetwork: "true"
+        app: wiki-db
+    spec:
+      containers:
+      - env:
+        - name: MARIADB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: MARIADB_DATABASE
+              name: wiki-db-config
+        - name: MARIADB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: MARIADB_USER
+              name: wiki-db-config
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wiki-db-sec
+              key: MARIADB_ROOT_PASSWORD
+        - name: MARIADB_USER
+          valueFrom:
+            secretKeyRef:
+              name: wiki-db-sec
+              key: MARIADB_USER
+        image: mail2sandeepd/mariadb-wiki
+        imagePullPolicy: Never
+        name: wiki-db
+        ports:
+        - containerPort: 3306
+      restartPolicy: Always
+      serviceAccountName: ""

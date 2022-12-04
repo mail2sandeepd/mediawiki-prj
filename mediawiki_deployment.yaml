@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mediawiki
+  name: mediawiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mediawiki
+  template:
+    metadata:
+      labels:
+        app: mediawiki
+    spec:
+      containers:
+      - image: mail2sandeepd/sd_mediawiki_1_39   ##:wqmail2sandeepd/sd_nginx    #sd_mediawiki_1_39:latest
+        imagePullPolicy: Never
+        name: mediawiki-pod-a
+        ports:
+        - containerPort: 80        
+#        resources:
+#          requests:
+#           memory: "64Mi"
+#           cpu: "250m"
+#        limits:
+#          memory: "128Mi"
+#          cpu: "500m"
+        volumeMounts:
+          - mountPath: /var/www/html/images
+            name: mediawiki-volume        
+          - mountPath: /var/www/html/LocalSettings.php
+            name: php-local-config-volume
+            subPath: LocalSettings.php
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: 
+        - name: mediawiki-volume
+        - configMap:
+            name: cm-php-setting
+          name: php-local-config-volume

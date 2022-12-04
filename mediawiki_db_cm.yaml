@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  MARIADB_DATABASE: wiki-database
+  MARIADB_USER: wiki-user
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: wiki-db-config
