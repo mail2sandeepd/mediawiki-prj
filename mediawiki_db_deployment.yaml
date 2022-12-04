@@ -34,15 +34,14 @@ spec:
             secretKeyRef:
               name: wiki-db-sec
               key: MARIADB_ROOT_PASSWORD
-        - name: MARIADB_USER
+        - name: MARIADB_USER_PASSWORD
           valueFrom:
             secretKeyRef:
               name: wiki-db-sec
-              key: MARIADB_USER
+              key: MARIADB_USER_PASSWORD
         image: mail2sandeepd/mariadb-wiki
         imagePullPolicy: Never
         name: wiki-db
         ports:
         - containerPort: 3306
       restartPolicy: Always
-      serviceAccountName: ""

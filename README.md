@@ -1,4 +1,4 @@
-# mediawiki-prj
+# Mediawiki Project 
 
 MediaWiki is a free and open-source wiki software. It is used on Wikipedia and almost all other Wikimedia websites.
 
@@ -17,10 +17,10 @@ We have build container images, and uploaded to Dockerhub.
     $ cd mediawiki-prj
 
 
-Build container image and push it to ECR
+Build container image and push it to Dockerhub, I have pushed with "sd_mediawiki_1_39" name.
 
     $docker build -t <your_image_name> .
-    $docker pull 
+    $docker pull mail2sandeepd/sd_mediawiki_1_39
 
 Note :- Before pushing image into Dockerhub you have to login into registry.
 
@@ -43,5 +43,8 @@ Open mediawiki for first setup, once mediawiki installation in cpmpleted you wil
 Now update mediawiki deployment for your cluster 
     
     $ kubectl apply -f mediawiki_deploymentupdate.yaml
-    
-   
+
+Now your mediawiki is available in microservice architacture.
+
+------------------------------------------------------------------------------------------------
+

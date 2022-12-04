@@ -5,7 +5,7 @@ metadata:
     app: mediawiki
   name: mediawiki
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: mediawiki
@@ -23,7 +23,13 @@ spec:
         volumeMounts:
           - mountPath: /var/www/html/images
             name: mediawiki-volume        
+          - mountPath: /var/www/html/LocalSettings.php
+            name: php-local-config-volume
+            subPath: LocalSettings.php
       restartPolicy: Always
       serviceAccountName: ""
       volumes: 
         - name: mediawiki-volume
+        - configMap:
+            name: cm-php-local-setting
+          name: php-local-config-volume
