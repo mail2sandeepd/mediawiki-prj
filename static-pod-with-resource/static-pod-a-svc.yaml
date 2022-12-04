@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pod-a
+  name: pod-a
+spec:
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: pod-a
+  type: NodePort
+status:
+  loadBalancer: {}  

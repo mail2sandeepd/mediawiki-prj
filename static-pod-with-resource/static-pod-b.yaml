@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-b
+  labels:
+    app: pod-b
+spec:
+  containers:
+    - name: pod-b
+      image: mail2sandeepd/sd_mediawiki_1_39
+      imagePullPolicy: Never
+      resources:
+        requests:
+          memory: "50Mi"
+        limits:
+          memory: "200Mi"
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP

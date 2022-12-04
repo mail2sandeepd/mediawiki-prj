@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mediwiki-quota
+  namespace: default
+spec:
+  limits:
+    - default: 
+        cpu: .5m
+        memory: 256M
+      default-Request:
+        cpu: .5m
+        memory: 256m
+      max:
+        cpu: 2m
+        memory: 1G
+      min:
+        cpu: .2m
+        memory:	128m
+      type: Container
