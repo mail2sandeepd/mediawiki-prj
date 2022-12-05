@@ -1,0 +1,64 @@
+---
+- hosts: kubernetes
+  become: no
+  tasks:
+    - name: Creating mediawiki deployment
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_deployment.yaml
+      tags: mediawiki
+
+    - name: Creating mediawiki servie
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_service.yaml
+      tags: mediawiki
+
+    - name: Creating Configmap for Database
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_db_cm.yaml
+      tags: mediawiki_db
+
+    - name: Creating Secret for Database
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_db_secret.yaml
+      tags: mediawiki_db
+
+    - name: Creating Database deployment
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_db_deployment.yaml
+      tags: mediawiki_db
+
+    - name: Creating Database service
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_db_service.yaml
+      tags: mediawiki_db
+
+    - name: Delete if Configmap already exist mediawiki deployment for php LocalSetting
+      ansible.builtin.command: kubectl delete configmap cm-php-local-setting 
+      tags: 
+        - mediawiki_deployment_update
+        - never
+      ignore_errors: true
+
+    - name: Creating Configmap for ediawiki deployment for php LocalSetting
+      ansible.builtin.command: kubectl create configmap cm-php-local-setting --from-file /app/kubernetes/mediawiki_project/mediawiki-prj/LocalSettings.php
+      tags: 
+        - mediawiki_deployment_update
+        - never
+
+    - name: Updating mediawiki deployment after php LocalSetting update
+      ansible.builtin.command: kubectl apply -f /app/kubernetes/mediawiki_project/mediawiki-prj/mediawiki_deployment_update.yaml
+      tags: 
+        - mediawiki_deployment_update
+        - never
+
+    - name: Clean all deployment
+      ansible.builtin.command: kubectl delete all -l play=mediawiki
+      tags: 
+        - mediawiki_clean
+        - never
+
+    - name: Clean all Configmaps
+      ansible.builtin.command: kubectl delete cm -l play=mediawiki
+      tags: 
+        - mediawiki_clean
+        - never
+
+    - name: Clean all Secrets
+      ansible.builtin.command: kubectl delete secret -l play=mediawiki
+      tags: 
+        - mediawiki_clean
+        - never

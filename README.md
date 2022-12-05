@@ -26,8 +26,18 @@ Note :- Before pushing image into Dockerhub you have to login into registry.
 
 Explanation:
 
+We can deploy these menifests using Ansible playbook, although here I have used command module which can be changed to kubernets.
 
-Deploying mediawiki application into Kubernetes/OpenShift, please create namespace/project in cluster before appling manifest.
+    $ ansible-playbook -i hosts playbook_mediawiki.yaml
+    $ ansible-playbook -i hosts playbook_mediawiki.yaml --tags=mediawiki_deployment_update
+
+Clean mediawiki deployment using Ansible
+
+    $ ansible-playbook -i hosts playbook_mediawiki.yaml --tags=mediawiki_clean
+
+
+
+Deploying mediawiki application into Kubernetes/OpenShift, please create namespace/project in cluster before appling manifest else it will be get deployed into default namespae/project.
 
     $ kubectl apply -f mediawiki_deployment.yaml
     $ kubectl apply -f mediawiki_service.yaml 

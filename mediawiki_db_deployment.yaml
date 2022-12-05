@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: wiki-db
+    play: mediawiki
   name: wiki-db
 spec:
   replicas: 1

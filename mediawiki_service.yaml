@@ -2,7 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: mediawiki
+    app: 
+    play: mediawiki
   name: mediawiki
 spec:
   type: LoadBalancer

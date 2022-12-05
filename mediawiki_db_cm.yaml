@@ -6,3 +6,6 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: wiki-db-config
+  labels:
+    app: wiki-db
+    play: mediawiki
