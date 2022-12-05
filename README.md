@@ -1,4 +1,4 @@
-# Mediawiki Project 
+# Mediawiki Project Deployment in Kubernetes or OpenShift
 
 MediaWiki is a free and open-source wiki software. It is used on Wikipedia and almost all other Wikimedia websites.
 
