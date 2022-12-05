@@ -10,12 +10,10 @@ We have build container images, and uploaded to Dockerhub.
 
  Clone upstream Git repository
 
-
     $ mkdir work
     $ cd work
     $ git clone https://github.com/mail2sandeepd/mediawiki-prj.git
     $ cd mediawiki-prj
-
 
 Build container image and push it to Dockerhub, I have pushed with "sd_mediawiki_1_39" name.
 
@@ -35,8 +33,6 @@ Clean mediawiki deployment using Ansible
 
     $ ansible-playbook -i hosts playbook_mediawiki.yaml --tags=mediawiki_clean
 
-
-
 Deploying mediawiki application into Kubernetes/OpenShift, please create namespace/project in cluster before appling manifest else it will be get deployed into default namespae/project.
 
     $ kubectl apply -f mediawiki_deployment.yaml
@@ -55,6 +51,12 @@ Now update mediawiki deployment for your cluster
     $ kubectl apply -f mediawiki_deploymentupdate.yaml
 
 Now your mediawiki is available in microservice architacture.
+
+
+Please change ```imagePullPolicy:``` in deployments 
+
+NOTE :- All above has been tested with minikube, you may have to change some config while deploying into Kubernetes/OpenShift 
+      
 
 ------------------------------------------------------------------------------------------------
 
